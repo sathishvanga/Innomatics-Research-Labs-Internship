@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <title>Regex Matcher</title>
+</head>
+<body style="font-family: 'Titillium Web', sans-serif;">
+    <div style="letter-spacing: 2px;text-align:center; padding: 10px 30px 0;background:rgba(19, 35, 47, 0.9);width: 50%;max-width: 100%;margin: 1% auto;border: 1px solid #0e161b;border-radius: 10px;">
+        <h1 style="font-style: normal;color: #fff;font-size: 35px;margin: 0 auto 10px;">- RegEx Engine and Email Validator -</h1>
+        <div style="box-shadow: 0px 0px 7px #17252f;border-radius: 5px;padding: 20px 10px;margin-bottom: 20px;">
+            <h1 style="margin: 0 auto 0;color: #fff;font-weight: 200;margin-bottom: 10px">- RegEx Engine -</h1>
+            <form id="regexForm" onsubmit="return false;">    
+                <textarea id="test_string" name="test_string" rows="4" cols="50" placeholder="Enter Your Test String" style="font-family: 'Titillium Web', sans-serif;resize: none;padding: 10px;border-radius: 5px;border: none;box-shadow: 0px 0px 5px #1ab188;background: transparent;margin-bottom: 20px;color: #fff;font-size: 15px;width: 60%;max-width: 100%;"></textarea><br>
+                <input type="text" id="regex_pattern" name="regex_pattern" placeholder="Enter Regular Expression" style="font-family: 'Titillium Web', sans-serif;padding: 10px;border-radius: 5px;border: none;box-shadow: 0px 0px 5px #1ab188;background: transparent;margin-bottom: 20px;color: #fff;font-size: 15px;width: 60%;max-width: 100%;">
+                <button type="button" onclick="checkString()" style="cursor: pointer;font-family: 'Titillium Web', sans-serif;padding: 10px;border-radius: 5px;border: 1px solid #0e7156;background: #1ab188;color: #000;width: 63%;max-width: 100%;font-weight:600;letter-spacing: 3px; margin: 0 auto 10px;">Check Your String</button>
+            </form>
+
+            <div id="resultContainer" style="display: none; padding: 10px;border: 1.5px dotted #1ab188;width: 60%;margin: 20px auto 0;border-radius: 5px;">
+                <h2 style="font-size:20px;margin: 0 auto 0;color: #fff;font-weight: 200;margin-bottom: 10px;">- Result -</h2>
+                <ul id="resultList" style="text-align: left;color: #ffffff;list-style-type: disclosure-closed;font-weight: 100;font-size: 13px;">
+                    <!-- Results will be dynamically added here -->
+                </ul>
+            </div>
+        </div>
+
+        <div style="box-shadow: 0px 0px 7px #17252f;border-radius: 5px;padding: 20px 10px;margin-top: 20px;">
+            <h1 style="margin: 0 auto 0;color: #fff;font-weight: 200;margin-bottom: 10px">- Email Validator -</h1>
+            <form id="emailForm" onsubmit="return false;">
+                <input type="email" id="email" name="email" placeholder="Enter Your Email Address" style="font-family: 'Titillium Web', sans-serif;padding: 10px;border-radius: 5px;border: none;box-shadow: 0px 0px 5px #1ab188;background: transparent;margin-bottom: 20px;color: #fff;font-size: 15px;width: 60%;max-width: 100%;">
+                <button type="button" onclick="validateEmail()" style="cursor: pointer;font-family: 'Titillium Web', sans-serif;padding: 10px;border-radius: 5px;border: 1px solid #0e7156;background: #1ab188;color: #000;width: 63%;max-width: 100%;font-weight:600;letter-spacing: 3px; margin: 0 auto 10px;">Validate Your Email</button>
+            </form>
+        
+            <div id="emailResultContainer" style="display: none; padding: 10px;border: 1.5px dotted #1ab188;width: 60%;margin: 20px auto 0;border-radius: 5px;">
+                <p id="emailResult" style="color: #fff; margin-bottom: 0;"></p>
+            </div>
+        </div>
+        <div>
+            <p style="text-align: right;color: #9b9b9b;font-weight: 100;font-size: 12px;"><i>Designed and Developed by <b>Sathish Vanga</b></i></p>
+        </div>
+    </div>
+
+    <script>
+        function checkString() {
+            var formData = new FormData(document.getElementById('regexForm'));
+
+            fetch('/match', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultContainer = document.getElementById('resultContainer');
+                var resultList = document.getElementById('resultList');
+
+                resultList.innerHTML = '';
+
+                if (data.matches && data.matches.length > 0) {
+                    data.matches.forEach(match => {
+                        var listItem = document.createElement('li');
+                        listItem.textContent = match;
+                        resultList.appendChild(listItem);
+                    });
+
+                    resultContainer.style.display = 'block';
+                } else {
+                    resultContainer.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function validateEmail() {
+            var emailInput = document.getElementById('email');
+            var emailResultContainer = document.getElementById('emailResultContainer');
+            var emailResult = document.getElementById('emailResult');
+
+            var email = emailInput.value;
+
+            // Regular expression pattern for validating email addresses
+            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (emailPattern.test(email)) {
+                emailResult.textContent = email + ' is a valid email';
+            } else {
+                emailResult.textContent = email + ' is an invalid email';
+            }
+
+            emailResultContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
