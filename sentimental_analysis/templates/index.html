@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .positive {
+            background-color: #dff0d8;
+            border: 1px solid #d6e9c6;
+        }
+        .negative {
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sentiment Analysis</h1>
+        <img src='https://innomatics.in/wp-content/uploads/2023/01/Innomatics-Logo1.png' alt="Image Description">
+        <form action="/" method="POST">
+            <label for="text">Enter text:</label><br>
+            <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
+            <button type="submit">Analyze Sentiment</button>
+        </form>
+        {% if sentiment is not none %}
+            {% if sentiment in [3, 4, 5] %}
+                <div class="result positive">
+                    Sentiment: Positive Review
+                </div>
+            {% else %}
+                <div class="result negative">
+                    Sentiment: Negative Review
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    <footer>
+        Designed by Sathish Vanga
+    </footer>
+</body>
+</html>
