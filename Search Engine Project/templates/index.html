@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Subtitle Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .header, .footer {
+            background-color: #1abc9c;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        .title {
+            margin: 0;
+            text-align: center;
+        }
+
+        .main {
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .search-form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: calc(100% - 120px);
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .search-button {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            background-color: #2ecc71;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-button:hover {
+            background-color: #27ae60;
+        }
+
+        .search-results {
+            text-align: left;
+        }
+
+        .author {
+            color: black; /* Black color */
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="title">Movie Subtitle Search</h1>
+        </div>
+    </header>
+    <main class="main">
+        <div class="container">
+            <form id="searchForm" class="search-form">
+                <input type="text" id="searchInput" class="search-input" placeholder="Enter Movie Name">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+            <div id="searchResults" class="search-results">
+                <!-- Search results will be dynamically populated here -->
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <center><div class="author">Created by Sathish Vanga & Adnan Baig</div></center>
+        </div>
+    </footer>
+</body>
+</html>
